@@ -10,7 +10,7 @@ export class QuotesController extends BaseController {
     super('api/quotes')
     this.router
       .get('', this.getRandomQuote)
-      .use(Auth0Provider.getAuthorizedUserInfo)
+      .use(Auth0Provider.getAuthorizedUserInfo) // the .use here makes it so gets are accessible for anyone, but only logged in users can post
       .post('', this.createQuote)
   }
 

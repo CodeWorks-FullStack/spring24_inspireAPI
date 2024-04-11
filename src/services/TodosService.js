@@ -7,7 +7,7 @@ import { Forbidden } from "../utils/Errors.js"
 class TodosService {
   async createTodo(todoData) {
     const todo = await dbContext.Todos.create(todoData)
-    return todo
+    return todo // we don't need to populate here just cause
   }
 
   async getUserTodos(userId) {
@@ -17,7 +17,7 @@ class TodosService {
   }
   async getTodoById(todoId) {
     const todo = await dbContext.Todos.findById(todoId)
-    if (!todo) throw new Error(`Not Todo with id: ${todoId}`)
+    if (!todo) throw new Error(`Not Todo with id: ${todoId}`) // make sure it's there
     return todo
   }
   async updateTodo(todoId, updateData) { // updateData, doesn't usually have a creatorId, we added it in the controller
@@ -28,13 +28,13 @@ class TodosService {
     //------------if they provided and update, use it ?? if they did not, use the original
     todoToUpdate.description = updateData.description ?? todoToUpdate.description
     todoToUpdate.completed = updateData.completed ?? todoToUpdate.completed
-    await todoToUpdate.save()
+    await todoToUpdate.save() // don't forget to save!
     return todoToUpdate
   }
   async deleteTodo(todoId, userId) { // don't forget to add the parameter here, AND MAKE SURE THEY ARE IN THE RIGHT ORDER
     const todoToDelete = await this.getTodoById(todoId)
     // NOTE making a check to make sure you cannot delete something you don't own
-    if (todoToDelete.creatorId != userId) throw new Forbidden("That's my purse I don't know you!")
+    if (todoToDelete.creatorId != userId) throw new Forbidden("That's my purse I don't know you!") // If you're not the creator, forbid the action
 
 
     await todoToDelete.deleteOne()

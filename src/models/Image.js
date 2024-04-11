@@ -7,7 +7,7 @@ export const ImageSchema = new Schema({
   authorId: { type: Schema.ObjectId, required: true, ref: "Account" }
 }, { timestamps: true, toJSON: { virtuals: true } })
 
-ImageSchema.virtual('author', {
+ImageSchema.virtual('author', { // don't forget to populate!
   localField: 'authorId',
   ref: 'Account',
   foreignField: '_id',

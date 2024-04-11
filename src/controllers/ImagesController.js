@@ -9,7 +9,7 @@ export class ImagesController extends BaseController {
     super('api/images')
     this.router
       .get('', this.getRandomImage)
-      .use(Auth0Provider.getAuthorizedUserInfo)
+      .use(Auth0Provider.getAuthorizedUserInfo) // the .use here makes it so gets are accessible for anyone, but only logged in users can post
       .post('', this.createImage)
   }
 
